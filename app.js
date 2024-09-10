@@ -6,14 +6,15 @@ function pesquisar() {
     let campoPesquisa = document.getElementById("campo-pesquisa").value;
     campoPesquisa = campoPesquisa.toLowerCase();
 
-		// Inicializa uma string vazia para armazenar os resultados
+    // Inicializa uma string vazia para armazenar os resultados
     let resultados = "";
     let titulo = "";
     let descricao = "";
+    let tags = "";
 
     // se campoPesquisa estiver vazio
     if (campoPesquisa == "") {
-        section.innerHTML ='<p>Nada foi encontrado</p>';
+        section.innerHTML ='<p>Busca inválida. Você precisa digitar o nome de algum anime ou personagem.</p>';
         return;
     }    
 
@@ -21,8 +22,9 @@ function pesquisar() {
     for (let anime of animes) {
         titulo = anime.titulo.toLowerCase();
         descricao = anime.descricao.toLowerCase();
+        tags = anime.tags.toLowerCase();
         // se titulo includes camposPesquisa
-        if (titulo.includes(campoPesquisa) || descricao.includes(campoPesquisa)) {
+        if (titulo.includes(campoPesquisa) || descricao.includes(campoPesquisa) || tags.includes(campoPesquisa)) {
             // Cria uma nova div para cada anime e adiciona as informações
             resultados += `
                 <div class="item-resultado">
@@ -34,8 +36,12 @@ function pesquisar() {
                 </div>
             `;    
         }
-
         
+    }
+
+    // se não encontrou nada na base de dados
+    if (!resultados) {
+        resultados = '<p>Nada foi encontrado</p>';
     }
 
     // Atribui a string com os resultados ao conteúdo da seção
